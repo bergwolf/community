@@ -6,6 +6,7 @@
     * [Prerequisites](#prerequisites)
     * [Contributor roles](#contributor-roles)
     * [Golang coding style](#golang-coding-style)
+    * [Rustlang coding style](#rustlang-coding-style)
     * [Certificate of Origin](#certificate-of-origin)
 * [GitHub best practices](#github-best-practices)
     * [Submit issues before PRs](#submit-issues-before-prs)
@@ -78,6 +79,7 @@ To get started, complete the prerequisites below.
 Special Git configuration is required for these contributors:
 
 * [Golang coding style](#golang-coding-style)
+* [Rustlang coding style](#rustlang-coding-style)
 * [Kata runtime static checks](#kata-runtime-static-checks)
 
 For all other contributor roles, follow the standard configuration, shown in
@@ -87,6 +89,18 @@ Prerequisites.
 
 * Review [Go Code Review Comments](https://github.com/golang/go/wiki/CodeReviewComments) to avoid common `Golang` errors.
 * Use `gofmt` to fix any mechanical style issues.
+
+### Rustlang coding style
+
+* Use `rustfmt` to fix any mechanical style issues. Rustfmt uses a style which conforms to the
+[Rust Style Guide](https://github.com/rust-dev-tools/fmt-rfcs/blob/master/guide/guide.md).
+* Use `clippy` to catch common mistakes and improve your Rust code.
+
+You can install the above tools as follows.
+
+```sh
+$ rustup component add rustfmt clippy
+```
 
 ### Certificate of Origin
 
@@ -242,6 +256,15 @@ For more details, see how to [set up a git remote](https://help.github.com/artic
     ```
     $ $EDITOR CONTRIBUTING.md
     ```
+
+   >**Note:** If editing in Windows make sure that all documents end with LF
+   > and not CRLF. The CI system will fail if carriage returns are in the
+   > document. Many editors support the ability to change this. There is a
+   > tool called dos2unix available on Git Bash for Windows and also available
+   > on Linux systems that can convert files to LF endings. See the
+   > [Configuring Git to handle line endings](https://docs.github.com/en/github/getting-started-with-github/getting-started-with-git/configuring-git-to-handle-line-endings)
+   > guide for more details on how to configure `git` to automatically insert
+   > the correct line endings.
 
 1. Commit your changes to the current (`fix-contrib-bugs`) branch. Assure
    you use the correct [patch format](#patch-format):
@@ -906,8 +929,8 @@ lgtm
 
 The Kata Containers project has a gating process to prevent introducing
 regressions. When your PR is submitted, a Continuous Integration (CI) system
-will run different checks on different platforms, based upon your changes. Currently Kata uses [Jenkins](http://jenkins.katacontainers.io) and
-[Travis CI](https://travis-ci.org/kata-containers/) for testing your changes.
+will run different checks on different platforms, based upon your changes. Currently Kata uses [Jenkins](http://jenkins.katacontainers.io)
+for testing your changes.
 
 Some of the checks are:
 
@@ -916,8 +939,7 @@ Some of the checks are:
 - Functional tests.
 - Integration tests.
 
-The Travis job will be executed right after the PR is opened, while the 
-Jenkins jobs will wait to be triggered. A maintainer must add a `/test` 
+The Jenkins jobs will wait to be triggered. A maintainer must add a `/test` 
 comment on the PR to let the CI jobs run.
 
 All CI jobs must pass in order to merge your PR.
