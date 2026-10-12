@@ -1,0 +1,30 @@
+# Project terms
+CIVS
+Dragonball
+Etherpad
+GHSA
+KCSA
+KCSN
+devicemapper
+kata
+katacontainers
+libcontainer
+rootfs
+virtcontainers
+
+# Names
+Anastassios
+Archana
+Aurelien
+Bombo
+Fabiano
+Fidêncio
+Fupan
+Horsman
+Kurz
+Ruoqing
+Tassos # Short for Anastassios
+Zvonko
+
+ISCAS
+Nubificus

@@ -1,42 +1,19 @@
 on: ["pull_request"]
-name: Static checks
+
 jobs:
-  test:
+  check-spelling:
     runs-on: ubuntu-latest
-    env:
-      GO111MODULE: off
-      TRAVIS: "true"
-      TRAVIS_BRANCH: ${{ github.base_ref }}
-      TRAVIS_PULL_REQUEST_BRANCH: ${{ github.head_ref }}
-      TRAVIS_PULL_REQUEST_SHA : ${{ github.event.pull_request.head.sha }}
     steps:
-    - name: Install Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.19.3
-    - name: Setup GOPATH
-      run: |
-        gopath_org=$(go env GOPATH)/src/github.com/kata-containers/
-        mkdir -p ${gopath_org}
-        ln -s ${PWD} ${gopath_org}
-        echo "TRAVIS_BRANCH: ${TRAVIS_BRANCH}"
-        echo "TRAVIS_PULL_REQUEST_BRANCH: ${TRAVIS_PULL_REQUEST_BRANCH}"
-        echo "TRAVIS_PULL_REQUEST_SHA: ${TRAVIS_PULL_REQUEST_SHA}"
-        echo "TRAVIS: ${TRAVIS}"
-    - name: Checkout code
-      uses: actions/checkout@v2
-      with:
-        fetch-depth: 0
-    - name: Setup travis references
-      run: |
-        echo "TRAVIS_BRANCH=${TRAVIS_BRANCH:-$(echo $GITHUB_REF | awk 'BEGIN { FS = \"/\" } ; { print $3 }')}" 
-    - name: Setup
-      run: |
-        community_repo=$(go env GOPATH)/src/github.com/kata-containers/community
-        pushd ${community_repo}
-        GOPATH=$(go env GOPATH) .ci/setup.sh 
-    - name: Running static checks
-      run: |
-        community_repo=$(go env GOPATH)/src/github.com/kata-containers/community
-        pushd ${community_repo}
-        GOPATH=$(go env GOPATH) .ci/static-checks.sh
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Check Spelling
+        uses: streetsidesoftware/cspell-action@9cd41bb518a24fefdafd9880cbab8f0ceba04d28  # 8.3.0
+        with:
+          # Only check markdown files
+          files: '**/*.md'
+          incremental_files_only: false # TODO revert once working
+          config: "cspell.json"
